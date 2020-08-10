@@ -1,5 +1,5 @@
 resource "google_monitoring_dashboard" "pub_sub_dashboard" {
-  count = var.pub_sub_monitoring ? 1 : 0
+  count = var.pubsub_monitoring ? 1 : 0
 
   project = var.tribe_project_id
   dashboard_json = templatefile("./templates/dashboard.pubsub.json.tpl", {
@@ -9,7 +9,7 @@ resource "google_monitoring_dashboard" "pub_sub_dashboard" {
 }
 
 resource "google_monitoring_alert_policy" "pub_sub_alert_policy" {
-  count = var.pub_sub_monitoring ? 1 : 0
+  count = var.pubsub_monitoring ? 1 : 0
 
   project               = var.tribe_project_id
   notification_channels = var.notification_channels

@@ -19,7 +19,7 @@ variable notification_channels {
   default     = []
 }
 
-variable pub_sub_monitoring {
+variable pubsub_monitoring {
     type        = bool
     description = "If the Pub/Sub dashboards and alerts should be created"
     default     = false
