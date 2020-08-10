@@ -2,7 +2,7 @@ resource "google_monitoring_dashboard" "pub_sub_dashboard" {
   count = var.pubsub_monitoring ? 1 : 0
 
   project = var.tribe_project_id
-  dashboard_json = templatefile("./templates/dashboard.pubsub.json.tpl", {
+  dashboard_json = templatefile("${path.module}/templates/dashboard.pubsub.json.tpl", {
     clan_project_id = var.clan_project_id
     clan_name       = var.clan_name
   })
@@ -35,7 +35,7 @@ resource "google_monitoring_dashboard" "firestore_dashboard" {
   count = var.firestore_monitoring ? 1 : 0
 
   project = var.tribe_project_id
-  dashboard_json = templatefile("./templates/dashboard.firestore.json.tpl", {
+  dashboard_json = templatefile("${path.module}/templates/dashboard.firestore.json.tpl", {
     clan_project_id = var.clan_project_id
     clan_name       = var.clan_name
   })
@@ -45,7 +45,7 @@ resource "google_monitoring_dashboard" "cloudrun_dashboard" {
   count = var.cloudrun_monitoring ? 1 : 0
 
   project = var.tribe_project_id
-  dashboard_json = templatefile("./templates/dashboard.cloudrun.json.tpl", {
+  dashboard_json = templatefile("${path.module}/templates/dashboard.cloudrun.json.tpl", {
     clan_project_id = var.clan_project_id
     clan_name       = var.clan_name
   })
@@ -78,7 +78,7 @@ resource "google_monitoring_dashboard" "cloudfunction_dashboard" {
   count = var.cloudfunction_monitoring ? 1 : 0
 
   project = var.tribe_project_id
-  dashboard_json = templatefile("./templates/dashboard.cloudfuction.json.tpl", {
+  dashboard_json = templatefile("${path.module}/templates/dashboard.cloudfuction.json.tpl", {
     clan_name = var.clan_name
   })
 }
