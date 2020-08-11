@@ -7,6 +7,10 @@ terraform {
 }
 
 provider "google" {
-  version     = "~> 3.8"
-  region      = "europe-west-1"
+  version = "~> 3.8"
+  region  = "europe-west-1"
+}
+
+provider "google-beta" {
+  region = "europe-west-1"
 }
