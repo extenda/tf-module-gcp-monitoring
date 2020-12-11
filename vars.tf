@@ -42,3 +42,9 @@ variable cloudfunction_monitoring {
     description = "If the Cloud Function dashboards and alerts should be created"
     default     = false
 }
+
+variable cloudsql_monitoring {
+    type        = bool
+    description = "If the Cloud SQL dashboards and alerts should be created"
+    default     = false
+}

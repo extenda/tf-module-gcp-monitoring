@@ -105,3 +105,13 @@ resource "google_monitoring_alert_policy" "cloudfunction_alert_policy" {
     }
   }
 }
+
+resource "google_monitoring_dashboard" "cloudsql_dashboard" {
+  count = var.cloudsql_monitoring ? 1 : 0
+
+  project = var.tribe_project_id
+  dashboard_json = templatefile("${path.module}/templates/dashboard.cloudsql.json.tpl", {
+    clan_project_id = var.clan_project_id
+    clan_name       = var.clan_name
+  })
+}
