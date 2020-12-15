@@ -196,3 +196,36 @@ resource "google_monitoring_dashboard" "dataflow_dashboard" {
     clan_name       = var.clan_name
   })
 }
+
+resource "google_monitoring_alert_policy" "memorystore_alert_policy" {
+  count = var.memorystore_monitoring ? 1 : 0
+
+  project               = var.tribe_project_id
+  notification_channels = var.notification_channels
+  display_name          = "Memory usage ratio - ${var.clan_name}"
+  combiner              = "AND"
+  conditions {
+    display_name = "Memory usage ratio"
+    condition_threshold {
+      threshold_value = "0.8"
+      filter          = "metric.type=\"redis.googleapis.com/stats/memory/usage_ratio\" resource.type=\"redis_instance\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
+      duration        = "120s"
+      comparison      = "COMPARISON_GT"
+      aggregations {
+        alignment_period   = "60s"
+        per_series_aligner = "ALIGN_MEAN"
+        group_by_fields    = ["resource.label.instance_id"]
+      }
+    }
+  }
+}
+
+resource "google_monitoring_dashboard" "memorystore_dashboard" {
+  count = var.memorystore_monitoring ? 1 : 0
+
+  project = var.tribe_project_id
+  dashboard_json = templatefile("${path.module}/templates/dashboard.memorystore.json.tpl", {
+    clan_project_id = var.clan_project_id
+    clan_name       = var.clan_name
+  })
+}

@@ -54,3 +54,9 @@ variable dataflow_monitoring {
     description = "If the Dataflow dashboards and alerts should be created"
     default     = false
 }
+
+variable memorystore_monitoring {
+    type        = bool
+    description = "If the Memorystore dashboards and alerts should be created"
+    default     = false
+}
