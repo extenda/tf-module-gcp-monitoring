@@ -13,7 +13,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy" {
 
   project               = var.tribe_project_id
   notification_channels = var.notification_channels
-  display_name          = "Pub/Sub DLQ Alert Policy"
+  display_name          = "Pub/Sub DLQ Alert Policy - ${var.clan_name}"
   combiner              = "AND"
   conditions {
     display_name = "DLQ messages count"
@@ -36,7 +36,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_acknowledgment" 
 
   project               = var.tribe_project_id
   notification_channels = var.notification_channels
-  display_name          = "Messages acknowledgment"
+  display_name          = "Messages acknowledgment - ${var.clan_name}"
   combiner              = "AND"
   conditions {
     display_name = "Messages acknowledgment"
@@ -59,7 +59,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_push_latency" {
 
   project               = var.tribe_project_id
   notification_channels = var.notification_channels
-  display_name          = "Push subscription latency"
+  display_name          = "Push subscription latency - ${var.clan_name}"
   combiner              = "AND"
   conditions {
     display_name = "Push subscription latency"
@@ -83,7 +83,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_response_status"
 
   project               = var.tribe_project_id
   notification_channels = var.notification_channels
-  display_name          = "Response status codes 5xx"
+  display_name          = "Response status codes 5xx - ${var.clan_name}"
   combiner              = "AND"
   conditions {
     display_name = "Response status codes 5xx"
@@ -122,29 +122,6 @@ resource "google_monitoring_dashboard" "cloudrun_dashboard" {
   })
 }
 
-resource "google_monitoring_alert_policy" "cloudrun_alert_policy" {
-  count = var.cloudrun_monitoring ? 1 : 0
-
-  project               = var.tribe_project_id
-  notification_channels = var.notification_channels
-  display_name          = "CloudRun 5xx Errors"
-  combiner              = "AND"
-  conditions {
-    display_name = "5xx errors appears"
-    condition_threshold {
-      threshold_value = "0"
-      filter          = "metric.type=\"knative.dev/serving/revision/request_count\" resource.type=\"knative_revision\" metric.label.\"response_code_class\"=\"5xx\""
-      duration        = "60s"
-      comparison      = "COMPARISON_GT"
-      aggregations {
-        alignment_period   = "60s"
-        per_series_aligner = "ALIGN_COUNT"
-        group_by_fields    = ["resource.label.service_name"]
-      }
-    }
-  }
-}
-
 resource "google_monitoring_dashboard" "cloudfunction_dashboard" {
   count = var.cloudfunction_monitoring ? 1 : 0
 
@@ -159,13 +136,13 @@ resource "google_monitoring_alert_policy" "cloudfunction_alert_policy" {
 
   project               = var.tribe_project_id
   notification_channels = var.notification_channels
-  display_name          = "Cloud Function errors policy"
+  display_name          = "Cloud Function errors policy - ${var.clan_name}"
   combiner              = "AND"
   conditions {
     display_name = "Error messages count"
     condition_threshold {
       threshold_value = "0"
-      filter          = "metric.type=\"cloudfunctions.googleapis.com/function/execution_count\" resource.type=\"cloud_function\" metric.label.\"status\"!=\"ok\""
+      filter          = "metric.type=\"cloudfunctions.googleapis.com/function/execution_count\" resource.type=\"cloud_function\" metric.label.\"status\"!=\"ok\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
       duration        = "60s"
       comparison      = "COMPARISON_GT"
       aggregations {
@@ -182,6 +159,39 @@ resource "google_monitoring_dashboard" "cloudsql_dashboard" {
 
   project = var.tribe_project_id
   dashboard_json = templatefile("${path.module}/templates/dashboard.cloudsql.json.tpl", {
+    clan_project_id = var.clan_project_id
+    clan_name       = var.clan_name
+  })
+}
+
+resource "google_monitoring_alert_policy" "dataflow_alert_policy" {
+  count = var.dataflow_monitoring ? 1 : 0
+
+  project               = var.tribe_project_id
+  notification_channels = var.notification_channels
+  display_name          = "System latency - ${var.clan_name}"
+  combiner              = "AND"
+  conditions {
+    display_name = "System latency"
+    condition_threshold {
+      threshold_value = "60"
+      filter          = "metric.type=\"dataflow.googleapis.com/job/element_count\" resource.type=\"dataflow_job\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
+      duration        = "180s"
+      comparison      = "COMPARISON_GT"
+      aggregations {
+        alignment_period   = "60s"
+        per_series_aligner = "ALIGN_MEAN"
+        group_by_fields    = ["resource.label.job_name"]
+      }
+    }
+  }
+}
+
+resource "google_monitoring_dashboard" "dataflow_dashboard" {
+  count = var.dataflow_monitoring ? 1 : 0
+
+  project = var.tribe_project_id
+  dashboard_json = templatefile("${path.module}/templates/dashboard.dataflow.json.tpl", {
     clan_project_id = var.clan_project_id
     clan_name       = var.clan_name
   })
