@@ -88,7 +88,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_response_status"
   conditions {
     display_name = "Response status codes 5xx"
     condition_threshold {
-      threshold_value = "5"
+      threshold_value = "0"
       filter          = "metric.type=\"pubsub.googleapis.com/subscription/push_request_count\" resource.type=\"pubsub_subscription\" metric.label.\"response_class\"=\"remote_server_5xx\" metric.label.\"response_code\"!=\"unreachable_5xx_error_502\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
       duration        = "120s"
       comparison      = "COMPARISON_GT"
