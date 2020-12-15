@@ -48,3 +48,9 @@ variable cloudsql_monitoring {
     description = "If the Cloud SQL dashboards and alerts should be created"
     default     = false
 }
+
+variable dataflow_monitoring {
+    type        = bool
+    description = "If the Dataflow dashboards and alerts should be created"
+    default     = false
+}

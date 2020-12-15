@@ -1,0 +1,67 @@
+{
+   "displayName":"Dataflow - ${clan_name} [tf]",
+   "gridLayout":{
+      "columns":"2",
+      "widgets":[
+         {
+            "title":"System lag (latency)",
+            "xyChart":{
+               "dataSets":[
+                  {
+                     "minAlignmentPeriod":"60s",
+                     "timeSeriesQuery":{
+                        "timeSeriesFilter":{
+                           "filter":"metric.type=\"dataflow.googleapis.com/job/system_lag\" resource.type=\"dataflow_job\" resource.label.\"project_id\"=\"${clan_project_id}\"",
+                           "aggregation":{
+                              "perSeriesAligner":"ALIGN_MEAN",
+                              "groupByFields":[
+                                 "resource.label.\"database_id\""
+                              ]
+                           }
+                        }
+                     },
+                     "plotType":"LINE"
+                  }
+               ],
+               "timeshiftDuration":"0s",
+               "yAxis":{
+                  "label":"y1Axis",
+                  "scale":"LINEAR"
+               }
+            }
+         },
+         {
+            "title":"Dataflow processing volume (throughput)",
+            "xyChart":{
+               "dataSets":[
+                  {
+                     "timeSeriesQuery":{
+                        "timeSeriesFilter":{
+                           "filter":"metric.type=\"dataflow.googleapis.com/job/element_count\" resource.type=\"dataflow_job\" resource.label.\"project_id\"=\"${clan_project_id}\"",
+                           "aggregation":{
+                              "perSeriesAligner":"ALIGN_MEAN",
+                              "crossSeriesReducer":"REDUCE_SUM",
+                              "groupByFields":[
+                                 "resource.label.\"job_name\""
+                              ]
+                           }
+                        },
+                        "unitOverride":"1"
+                     },
+                     "plotType":"LINE",
+                     "minAlignmentPeriod":"60s"
+                  }
+               ],
+               "timeshiftDuration":"0s",
+               "yAxis":{
+                  "label":"y1Axis",
+                  "scale":"LINEAR"
+               },
+               "chartOptions":{
+                  "mode":"COLOR"
+               }
+            }
+         }
+      ]
+   }
+}
