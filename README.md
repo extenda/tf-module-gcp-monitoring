@@ -15,6 +15,7 @@
 | notification\_channels | List of notificaton channel IDs | `list` | `[]` | no |
 | pubsub\_monitoring | If the Pub/Sub dashboards and alerts should be created | `bool` | `false` | no |
 | tribe\_project\_id | Project ID where the Monitoring resources will be created | `string` | n/a | yes |
+| user\_labels | User labels for AlertPolicy objects | `map` | `{}` | no |
 
 ## Outputs
 
