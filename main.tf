@@ -29,6 +29,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy" {
       }
     }
   }
+  user_labels = var.user_labels
 }
 
 resource "google_monitoring_alert_policy" "pub_sub_alert_policy_acknowledgment" {
@@ -52,6 +53,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_acknowledgment" 
       }
     }
   }
+  user_labels = var.user_labels
 }
 
 resource "google_monitoring_alert_policy" "pub_sub_alert_policy_push_latency" {
@@ -76,6 +78,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_push_latency" {
       }
     }
   }
+  user_labels = var.user_labels
 }
 
 resource "google_monitoring_alert_policy" "pub_sub_alert_policy_response_status" {
@@ -100,6 +103,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_response_status"
       }
     }
   }
+  user_labels = var.user_labels
 }
 
 resource "google_monitoring_dashboard" "firestore_dashboard" {
@@ -152,6 +156,7 @@ resource "google_monitoring_alert_policy" "cloudfunction_alert_policy" {
       }
     }
   }
+  user_labels = var.user_labels
 }
 
 resource "google_monitoring_dashboard" "cloudsql_dashboard" {
@@ -185,6 +190,7 @@ resource "google_monitoring_alert_policy" "dataflow_alert_policy" {
       }
     }
   }
+  user_labels = var.user_labels
 }
 
 resource "google_monitoring_dashboard" "dataflow_dashboard" {
@@ -218,6 +224,7 @@ resource "google_monitoring_alert_policy" "memorystore_alert_policy" {
       }
     }
   }
+  user_labels = var.user_labels
 }
 
 resource "google_monitoring_dashboard" "memorystore_dashboard" {
