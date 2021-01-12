@@ -20,43 +20,49 @@ variable notification_channels {
 }
 
 variable pubsub_monitoring {
-    type        = bool
-    description = "If the Pub/Sub dashboards and alerts should be created"
-    default     = false
+  type        = bool
+  description = "If the Pub/Sub dashboards and alerts should be created"
+  default     = false
 }
 
 variable cloudrun_monitoring {
-    type        = bool
-    description = "If the Cloud Run dashboards and alerts should be created"
-    default     = false
+  type        = bool
+  description = "If the Cloud Run dashboards and alerts should be created"
+  default     = false
 }
 
 variable firestore_monitoring {
-    type        = bool
-    description = "If the Firestore dashboards and alerts should be created"
-    default     = false
+  type        = bool
+  description = "If the Firestore dashboards and alerts should be created"
+  default     = false
 }
 
 variable cloudfunction_monitoring {
-    type        = bool
-    description = "If the Cloud Function dashboards and alerts should be created"
-    default     = false
+  type        = bool
+  description = "If the Cloud Function dashboards and alerts should be created"
+  default     = false
 }
 
 variable cloudsql_monitoring {
-    type        = bool
-    description = "If the Cloud SQL dashboards and alerts should be created"
-    default     = false
+  type        = bool
+  description = "If the Cloud SQL dashboards and alerts should be created"
+  default     = false
 }
 
 variable dataflow_monitoring {
-    type        = bool
-    description = "If the Dataflow dashboards and alerts should be created"
-    default     = false
+  type        = bool
+  description = "If the Dataflow dashboards and alerts should be created"
+  default     = false
 }
 
 variable memorystore_monitoring {
-    type        = bool
-    description = "If the Memorystore dashboards and alerts should be created"
-    default     = false
+  type        = bool
+  description = "If the Memorystore dashboards and alerts should be created"
+  default     = false
+}
+
+variable user_labels {
+  type        = map
+  description = "User labels for AlertPolicy objects"
+  default     = {}
 }
