@@ -31,12 +31,6 @@
                      "value":1
                   }
                ],
-               "thresholds":[
-                  {
-                     "label":"count",
-                     "value":1
-                  }
-               ],
                "yAxis":{
                   "label":"y1Axis",
                   "scale":"LINEAR"
@@ -160,6 +154,76 @@
                         "unitOverride":"1"
                      },
                      "plotType":"STACKED_BAR",
+                     "minAlignmentPeriod":"60s"
+                  }
+               ],
+               "chartOptions":{
+                  "mode":"COLOR"
+               },
+               "timeshiftDuration":"0s",
+               "yAxis":{
+                  "label":"y1Axis",
+                  "scale":"LINEAR"
+               }
+            }
+         },
+         {
+            "title":"Acknowledge message operations, Pull requests [RATE]",
+            "xyChart":{
+               "dataSets":[
+                  {
+                     "timeSeriesQuery":{
+                        "timeSeriesFilter":{
+                           "filter":"metric.type=\"pubsub.googleapis.com/subscription/pull_ack_message_operation_count\" resource.type=\"pubsub_subscription\" resource.label.\"project_id\"=\"${clan_project_id}\"",
+                           "secondaryAggregation":{
+                              "perSeriesAligner":"ALIGN_MEAN"
+                           },
+                           "aggregation":{
+                              "perSeriesAligner":"ALIGN_RATE",
+                              "groupByFields":[
+                                 "metric.label.\"response_code\"",
+                                 "resource.label.\"subscription_id\""
+                              ]
+                           }
+                        },
+                        "unitOverride":"1"
+                     },
+                     "plotType":"LINE",
+                     "minAlignmentPeriod":"60s"
+                  }
+               ],
+               "chartOptions":{
+                  "mode":"COLOR"
+               },
+               "timeshiftDuration":"0s",
+               "yAxis":{
+                  "label":"y1Axis",
+                  "scale":"LINEAR"
+               }
+            }
+         },
+         {
+            "title":"Acknowledge message operations, Push requests [RATE]",
+            "xyChart":{
+               "dataSets":[
+                  {
+                     "timeSeriesQuery":{
+                        "timeSeriesFilter":{
+                           "filter":"metric.type=\"pubsub.googleapis.com/subscription/push_request_count\" resource.type=\"pubsub_subscription\" resource.label.\"project_id\"=\"${clan_project_id}\"",
+                           "secondaryAggregation":{
+                              "perSeriesAligner":"ALIGN_MEAN"
+                           },
+                           "aggregation":{
+                              "perSeriesAligner":"ALIGN_RATE",
+                              "groupByFields":[
+                                 "metric.label.\"response_code\"",
+                                 "resource.label.\"subscription_id\""
+                              ]
+                           }
+                        },
+                        "unitOverride":"1"
+                     },
+                     "plotType":"LINE",
                      "minAlignmentPeriod":"60s"
                   }
                ],
