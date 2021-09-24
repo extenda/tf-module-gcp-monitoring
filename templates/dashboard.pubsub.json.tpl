@@ -21,7 +21,8 @@
                         },
                         "unitOverride":"1"
                      },
-                     "plotType":"LINE"
+                     "plotType":"LINE",
+                     "targetAxis":"Y1"
                   }
                ],
                "timeshiftDuration":"0s",
@@ -56,6 +57,7 @@
                         "unitOverride":"s"
                      },
                      "plotType":"LINE",
+                     "targetAxis":"Y1",
                      "minAlignmentPeriod":"60s"
                   }
                ],
@@ -88,6 +90,7 @@
                         "unitOverride":"By"
                      },
                      "plotType":"LINE",
+                     "targetAxis":"Y1",
                      "minAlignmentPeriod":"60s"
                   }
                ],
@@ -121,6 +124,7 @@
                         "unitOverride":"1"
                      },
                      "plotType":"STACKED_BAR",
+                     "targetAxis":"Y1",
                      "minAlignmentPeriod":"60s"
                   }
                ],
@@ -154,6 +158,7 @@
                         "unitOverride":"1"
                      },
                      "plotType":"STACKED_BAR",
+                     "targetAxis":"Y1",
                      "minAlignmentPeriod":"60s"
                   }
                ],
@@ -189,6 +194,7 @@
                         "unitOverride":"1"
                      },
                      "plotType":"LINE",
+                     "targetAxis":"Y1",
                      "minAlignmentPeriod":"60s"
                   }
                ],
@@ -224,6 +230,7 @@
                         "unitOverride":"1"
                      },
                      "plotType":"LINE",
+                     "targetAxis":"Y1",
                      "minAlignmentPeriod":"60s"
                   }
                ],

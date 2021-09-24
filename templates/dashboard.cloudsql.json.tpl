@@ -21,7 +21,8 @@
                            }
                         }
                      },
-                     "plotType":"LINE"
+                     "plotType":"LINE",
+                     "targetAxis":"Y1"
                   }
                ],
                "timeshiftDuration":"0s",
@@ -50,7 +51,8 @@
                         },
                         "unitOverride":"1"
                      },
-                     "plotType":"LINE"
+                     "plotType":"LINE",
+                     "targetAxis":"Y1"
                   }
                ],
                "timeshiftDuration":"0s",
@@ -79,7 +81,8 @@
                         },
                         "unitOverride":"1"
                      },
-                     "plotType":"LINE"
+                     "plotType":"LINE",
+                     "targetAxis":"Y1"
                   }
                ],
                "timeshiftDuration":"0s",

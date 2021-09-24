@@ -13,6 +13,7 @@
             {
               "minAlignmentPeriod": "60s",
               "plotType": "LINE",
+              "targetAxis":"Y1",
               "timeSeriesQuery": {
                 "timeSeriesFilter": {
                   "aggregation": {
@@ -48,6 +49,7 @@
             {
               "minAlignmentPeriod": "60s",
               "plotType": "LINE",
+              "targetAxis":"Y1",
               "timeSeriesQuery": {
                 "timeSeriesFilter": {
                   "aggregation": {
@@ -83,6 +85,7 @@
             {
               "minAlignmentPeriod": "60s",
               "plotType": "LINE",
+              "targetAxis":"Y1",
               "timeSeriesQuery": {
                 "timeSeriesFilter": {
                   "aggregation": {
@@ -116,6 +119,7 @@
             {
               "minAlignmentPeriod": "60s",
               "plotType": "LINE",
+              "targetAxis":"Y1",
               "timeSeriesQuery": {
                 "timeSeriesFilter": {
                   "aggregation": {
