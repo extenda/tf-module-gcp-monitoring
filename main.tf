@@ -169,13 +169,13 @@ resource "google_monitoring_dashboard" "cloudsql_dashboard" {
   })
 }
 
-resource "google_monitoring_alert_policy" "dataflow_alert_policy_system_lag" {
+resource "google_monitoring_alert_policy" "dataflow_alert_policy" {
   count = var.dataflow_monitoring ? 1 : 0
 
   project               = var.tribe_project_id
   notification_channels = var.notification_channels
-  display_name          = "Dataflow system lag - ${var.clan_name}"
-  combiner              = "AND"
+  display_name          = "Dataflow latency - ${var.clan_name}"
+  combiner              = "OR"
   conditions {
     display_name = "System lag exceeds 30 seconds for 2 minutes"
     condition_threshold {
@@ -194,16 +194,6 @@ resource "google_monitoring_alert_policy" "dataflow_alert_policy_system_lag" {
       }
     }
   }
-  user_labels = var.user_labels
-}
-
-resource "google_monitoring_alert_policy" "dataflow_alert_policy_watermark_age" {
-  count = var.dataflow_monitoring ? 1 : 0
-
-  project               = var.tribe_project_id
-  notification_channels = var.notification_channels
-  display_name          = "Data watermark lag - ${var.clan_name}"
-  combiner              = "AND"
   conditions {
     display_name = "Data watermark lag exceeds 60 seconds for 5 minutes"
     condition_threshold {
@@ -222,16 +212,6 @@ resource "google_monitoring_alert_policy" "dataflow_alert_policy_watermark_age" 
       }
     }
   }
-  user_labels = var.user_labels
-}
-
-resource "google_monitoring_alert_policy" "dataflow_alert_policy_latency" {
-  count = var.dataflow_monitoring ? 1 : 0
-
-  project               = var.tribe_project_id
-  notification_channels = var.notification_channels
-  display_name          = "Dataflow latency - ${var.clan_name}"
-  combiner              = "AND"
   conditions {
     display_name = "System lag increases by 70% over a 1 minute period"
     condition_threshold {
