@@ -174,19 +174,63 @@ resource "google_monitoring_alert_policy" "dataflow_alert_policy" {
 
   project               = var.tribe_project_id
   notification_channels = var.notification_channels
-  display_name          = "System latency - ${var.clan_name}"
-  combiner              = "AND"
+  display_name          = "Dataflow latency - ${var.clan_name}"
+  combiner              = "OR"
   conditions {
-    display_name = "System latency"
+    display_name = "System lag exceeds 30 seconds for 2 minutes"
     condition_threshold {
-      threshold_value = "60"
-      filter          = "metric.type=\"dataflow.googleapis.com/job/element_count\" resource.type=\"dataflow_job\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
+      threshold_value = 30.0
+      filter          = "metric.type=\"dataflow.googleapis.com/job/system_lag\" resource.type=\"dataflow_job\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
       duration        = "180s"
       comparison      = "COMPARISON_GT"
       aggregations {
+        alignment_period     = "60s"
+        per_series_aligner   = "ALIGN_MEAN"
+        cross_series_reducer = "REDUCE_MEAN"
+        group_by_fields      = ["resource.label.job_name"]
+      }
+      trigger {
+        count = 1
+      }
+    }
+  }
+  conditions {
+    display_name = "Data watermark lag exceeds 60 seconds for 5 minutes"
+    condition_threshold {
+      threshold_value = 60.0
+      filter          = "metric.type=\"dataflow.googleapis.com/job/data_watermark_age\" resource.type=\"dataflow_job\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
+      duration        = "300s"
+      comparison      = "COMPARISON_GT"
+      aggregations {
+        alignment_period     = "60s"
+        per_series_aligner   = "ALIGN_MEAN"
+        cross_series_reducer = "REDUCE_MEAN"
+        group_by_fields      = ["resource.label.job_name"]
+      }
+      trigger {
+        count = 1
+      }
+    }
+  }
+  conditions {
+    display_name = "System lag increases by 70% over a 1 minute period"
+    condition_threshold {
+      threshold_value = 70.0
+      filter          = "metric.type=\"dataflow.googleapis.com/job/system_lag\" resource.type=\"dataflow_job\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
+      duration        = "0s"
+      comparison      = "COMPARISON_GT"
+      aggregations {
+        alignment_period     = "60s"
+        cross_series_reducer = "REDUCE_MEAN"
+        per_series_aligner   = "ALIGN_MEAN"
+        group_by_fields      = ["resource.label.job_name"]
+      }
+      aggregations {
         alignment_period   = "60s"
-        per_series_aligner = "ALIGN_MEAN"
-        group_by_fields    = ["resource.label.job_name"]
+        per_series_aligner = "ALIGN_PERCENT_CHANGE"
+      }
+      trigger {
+        count = 1
       }
     }
   }

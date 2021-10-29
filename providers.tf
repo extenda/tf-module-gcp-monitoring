@@ -7,10 +7,6 @@ terraform {
   }
 }
 
-provider "google" {
-  version = ">= 3.8"
-}
+provider "google" {}
 
-provider "google-beta" {
-  version = ">= 3.8"
-}
+provider "google-beta" {}
