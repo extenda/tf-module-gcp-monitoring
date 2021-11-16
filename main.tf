@@ -1,7 +1,3 @@
-locals {
-    notification_channel = [var.notification_channels[0]]
-}
-
 resource "google_monitoring_dashboard" "pub_sub_dashboard" {
   count = var.pubsub_monitoring ? 1 : 0
 
@@ -16,7 +12,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy" {
   count = var.pubsub_monitoring ? 1 : 0
 
   project               = var.tribe_project_id
-  notification_channels = local.notification_channel
+  notification_channels = [var.notification_channels[0]]
   display_name          = "Pub/Sub DLQ Alert Policy - ${var.clan_name}"
   combiner              = "AND"
   conditions {
@@ -40,7 +36,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_acknowledgment" 
   count = var.pubsub_monitoring ? 1 : 0
 
   project               = var.tribe_project_id
-  notification_channels = local.notification_channel
+  notification_channels = [var.notification_channels[0]]
   display_name          = "Messages acknowledgment - ${var.clan_name}"
   combiner              = "AND"
   conditions {
@@ -64,7 +60,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_push_latency" {
   count = var.pubsub_monitoring ? 1 : 0
 
   project               = var.tribe_project_id
-  notification_channels = local.notification_channel
+  notification_channels = [var.notification_channels[0]]
   display_name          = "Push subscription latency - ${var.clan_name}"
   combiner              = "AND"
   conditions {
@@ -89,7 +85,7 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_response_status"
   count = var.pubsub_monitoring ? 1 : 0
 
   project               = var.tribe_project_id
-  notification_channels = local.notification_channel
+  notification_channels = [var.notification_channels[0]]
   display_name          = "Response status codes 5xx - ${var.clan_name}"
   combiner              = "AND"
   conditions {
@@ -143,7 +139,7 @@ resource "google_monitoring_alert_policy" "cloudfunction_alert_policy" {
   count = var.cloudfunction_monitoring ? 1 : 0
 
   project               = var.tribe_project_id
-  notification_channels = local.notification_channel
+  notification_channels = [var.notification_channels[0]]
   display_name          = "Cloud Function errors policy - ${var.clan_name}"
   combiner              = "AND"
   conditions {
@@ -177,7 +173,7 @@ resource "google_monitoring_alert_policy" "dataflow_alert_policy" {
   count = var.dataflow_monitoring ? 1 : 0
 
   project               = var.tribe_project_id
-  notification_channels = local.notification_channel
+  notification_channels = [var.notification_channels[0]]
   display_name          = "Dataflow latency - ${var.clan_name}"
   combiner              = "OR"
   conditions {
@@ -255,7 +251,7 @@ resource "google_monitoring_alert_policy" "memorystore_alert_policy" {
   count = var.memorystore_monitoring ? 1 : 0
 
   project               = var.tribe_project_id
-  notification_channels = local.notification_channel
+  notification_channels = [var.notification_channels[0]]
   display_name          = "Memory usage ratio - ${var.clan_name}"
   combiner              = "AND"
   conditions {
