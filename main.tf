@@ -1,5 +1,5 @@
 locals {
-    notification_channel = var.notification_channels[0]
+    notification_channel = [var.notification_channels[0]]
 }
 
 resource "google_monitoring_dashboard" "pub_sub_dashboard" {
