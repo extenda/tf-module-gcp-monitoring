@@ -271,7 +271,7 @@ variable system_lag_exceeds_cross_series_reducer {
   default     = "REDUCE_MEAN"
 }
 
-### Dataflow Data watermark lag exceeds 60 seconds for 5 minutesg
+### Dataflow Data watermark lag exceeds 60 seconds for 5 minutes
 variable watermark_lag_threshold_value {
   type        = string
   description = "A value against which to compare the time series."
