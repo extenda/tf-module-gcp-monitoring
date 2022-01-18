@@ -18,13 +18,13 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy" {
   conditions {
     display_name = "DLQ messages count"
     condition_threshold {
-      threshold_value = "0"
+      threshold_value = var.dlq_count_threshold_value
       filter          = "metric.type=\"pubsub.googleapis.com/subscription/dead_letter_message_count\" resource.type=\"pubsub_subscription\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
-      duration        = "60s"
-      comparison      = "COMPARISON_GT"
+      duration        = var.dlq_count_duration
+      comparison      = var.dlq_count_comparison
       aggregations {
-        alignment_period   = "60s"
-        per_series_aligner = "ALIGN_COUNT"
+        alignment_period   = var.dlq_count_alignment_period
+        per_series_aligner = var.dlq_count_per_series_aligner
         group_by_fields    = ["resource.label.subscription_id"]
       }
     }
@@ -42,13 +42,13 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_acknowledgment" 
   conditions {
     display_name = "Messages acknowledgment"
     condition_threshold {
-      threshold_value = "1"
+      threshold_value = var.msg_ack_threshold_value
       filter          = "metric.type=\"pubsub.googleapis.com/subscription/num_undelivered_messages\" resource.type=\"pubsub_subscription\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
-      duration        = "1800s"
-      comparison      = "COMPARISON_GT"
+      duration        = var.msg_ack_duration
+      comparison      = var.msg_ack_comparison
       aggregations {
-        alignment_period   = "60s"
-        per_series_aligner = "ALIGN_COUNT"
+        alignment_period   = var.msg_ack_alignment_period
+        per_series_aligner = var.msg_ack_per_series_aligner
         group_by_fields    = ["resource.label.subscription_id"]
       }
     }
@@ -66,14 +66,14 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_push_latency" {
   conditions {
     display_name = "Push subscription latency"
     condition_threshold {
-      threshold_value = "3000000"
+      threshold_value = var.push_latency_threshold_value
       filter          = "metric.type=\"pubsub.googleapis.com/subscription/push_request_latencies\" resource.type=\"pubsub_subscription\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
-      duration        = "120s"
-      comparison      = "COMPARISON_GT"
+      duration        = var.push_latency_duration
+      comparison      = var.push_latency_comparison
       aggregations {
-        alignment_period     = "60s"
-        per_series_aligner   = "ALIGN_DELTA"
-        cross_series_reducer = "REDUCE_PERCENTILE_95"
+        alignment_period     = var.push_latency_alignment_period
+        per_series_aligner   = var.push_latency_per_series_aligner
+        cross_series_reducer = var.push_latency_cross_series_reducer
         group_by_fields      = ["resource.label.subscription_id"]
       }
     }
@@ -91,14 +91,14 @@ resource "google_monitoring_alert_policy" "pub_sub_alert_policy_response_status"
   conditions {
     display_name = "Response status codes 5xx"
     condition_threshold {
-      threshold_value = "0"
+      threshold_value = var.reponse_code_threshold_value
       filter          = "metric.type=\"pubsub.googleapis.com/subscription/push_request_count\" resource.type=\"pubsub_subscription\" metric.label.\"response_class\"=\"remote_server_5xx\" metric.label.\"response_code\"!=\"unreachable_5xx_error_502\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
-      duration        = "120s"
-      comparison      = "COMPARISON_GT"
+      duration        = var.reponse_code_duration
+      comparison      = var.reponse_code_comparison
       aggregations {
-        alignment_period     = "60s"
-        cross_series_reducer = "REDUCE_PERCENTILE_05"
-        per_series_aligner   = "ALIGN_RATE"
+        alignment_period     = var.reponse_code_alignment_period
+        cross_series_reducer = var.reponse_code_cross_series_reducer
+        per_series_aligner   = var.reponse_code_per_series_aligner
         group_by_fields      = ["resource.label.subscription_id", "metric.label.response_code"]
       }
     }
@@ -145,13 +145,13 @@ resource "google_monitoring_alert_policy" "cloudfunction_alert_policy" {
   conditions {
     display_name = "Error messages count"
     condition_threshold {
-      threshold_value = "0"
+      threshold_value = var.func_message_count_threshold_value
       filter          = "metric.type=\"cloudfunctions.googleapis.com/function/execution_count\" resource.type=\"cloud_function\" metric.label.\"status\"!=\"ok\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
-      duration        = "60s"
-      comparison      = "COMPARISON_GT"
+      duration        = var.func_message_count_duration
+      comparison      = var.func_message_count_comparison
       aggregations {
-        alignment_period   = "60s"
-        per_series_aligner = "ALIGN_COUNT"
+        alignment_period   = var.func_message_count_alignment_period
+        per_series_aligner = var.func_message_count_per_series_aligner
         group_by_fields    = ["metric.label.status", "resource.label.function_name"]
       }
     }
@@ -179,14 +179,14 @@ resource "google_monitoring_alert_policy" "dataflow_alert_policy" {
   conditions {
     display_name = "System lag exceeds 30 seconds for 2 minutes"
     condition_threshold {
-      threshold_value = 30.0
+      threshold_value = var.system_lag_exceeds_threshold_value
       filter          = "metric.type=\"dataflow.googleapis.com/job/system_lag\" resource.type=\"dataflow_job\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
-      duration        = "180s"
-      comparison      = "COMPARISON_GT"
+      duration        = var.system_lag_exceeds_duration
+      comparison      = var.system_lag_exceeds_comparison
       aggregations {
-        alignment_period     = "60s"
-        per_series_aligner   = "ALIGN_MEAN"
-        cross_series_reducer = "REDUCE_MEAN"
+        alignment_period     = var.system_lag_exceeds_alignment_period
+        per_series_aligner   = var.system_lag_exceeds_per_series_aligner
+        cross_series_reducer = var.system_lag_exceeds_cross_series_reducer
         group_by_fields      = ["resource.label.job_name"]
       }
       trigger {
@@ -197,14 +197,14 @@ resource "google_monitoring_alert_policy" "dataflow_alert_policy" {
   conditions {
     display_name = "Data watermark lag exceeds 60 seconds for 5 minutes"
     condition_threshold {
-      threshold_value = 60.0
+      threshold_value = var.watermark_lag_threshold_value
       filter          = "metric.type=\"dataflow.googleapis.com/job/data_watermark_age\" resource.type=\"dataflow_job\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
-      duration        = "300s"
-      comparison      = "COMPARISON_GT"
+      duration        = var.watermark_lag_duration
+      comparison      = var.watermark_lag_comparison
       aggregations {
-        alignment_period     = "60s"
-        per_series_aligner   = "ALIGN_MEAN"
-        cross_series_reducer = "REDUCE_MEAN"
+        alignment_period     = var.watermark_lag_alignment_period
+        per_series_aligner   = var.watermark_lag_per_series_aligner
+        cross_series_reducer = var.watermark_lag_cross_series_reducer
         group_by_fields      = ["resource.label.job_name"]
       }
       trigger {
@@ -215,14 +215,14 @@ resource "google_monitoring_alert_policy" "dataflow_alert_policy" {
   conditions {
     display_name = "System lag increases by 70% over a 1 minute period"
     condition_threshold {
-      threshold_value = 70.0
+      threshold_value = var.system_lag_increases_threshold_value
       filter          = "metric.type=\"dataflow.googleapis.com/job/system_lag\" resource.type=\"dataflow_job\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
-      duration        = "0s"
-      comparison      = "COMPARISON_GT"
+      duration        = var.system_lag_increases_duration
+      comparison      = var.system_lag_increases_comparison
       aggregations {
-        alignment_period     = "60s"
-        cross_series_reducer = "REDUCE_MEAN"
-        per_series_aligner   = "ALIGN_MEAN"
+        alignment_period     = var.system_lag_increases_alignment_period
+        cross_series_reducer = var.system_lag_increases_cross_series_reducer
+        per_series_aligner   = var.system_lag_increases_per_series_aligner
         group_by_fields      = ["resource.label.job_name"]
       }
       aggregations {
@@ -257,13 +257,13 @@ resource "google_monitoring_alert_policy" "memorystore_alert_policy" {
   conditions {
     display_name = "Memory usage ratio"
     condition_threshold {
-      threshold_value = "0.8"
+      threshold_value = var.memory_usage_threshold_value
       filter          = "metric.type=\"redis.googleapis.com/stats/memory/usage_ratio\" resource.type=\"redis_instance\" resource.label.\"project_id\"=\"${var.clan_project_id}\""
-      duration        = "120s"
-      comparison      = "COMPARISON_GT"
+      duration        = var.memory_usage_duration
+      comparison      = var.memory_usage_comparison
       aggregations {
-        alignment_period   = "60s"
-        per_series_aligner = "ALIGN_MEAN"
+        alignment_period   = var.memory_usage_alignment_period
+        per_series_aligner = var.memory_usage_per_series_aligner
         group_by_fields    = ["resource.label.instance_id"]
       }
     }
