@@ -9,7 +9,7 @@ variable monitoring_project_id {
 }
 
 variable uptime_checks {
-  type = any
+  type        = any
   description = "The list of uptime checks configurations"
 }
 
