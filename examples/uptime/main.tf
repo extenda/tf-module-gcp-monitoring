@@ -1,5 +1,5 @@
-module monitoring {
-  source = "../modules/uptime-checks"
+module uptime_check {
+  source = "../../modules/uptime-checks"
 
   project_id            = "clan-project-id"
   monitoring_project_id = "monitoring-project-id"
@@ -14,9 +14,9 @@ module monitoring {
       check_type   = "HTTPS"
       type         = "uptime_url"
       hostname     = "service1.test.com"
-      headers      = {
+      headers = {
         "foo" = "bar"
-        }
+      }
     },
     {
       service_name = "Service 2"
