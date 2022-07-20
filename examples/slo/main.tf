@@ -5,5 +5,4 @@ module slos {
 
   display_name          = "my-service"
   monitoring_project_id = "monitoring-project-id"
-  project_env           = "prod"
 }

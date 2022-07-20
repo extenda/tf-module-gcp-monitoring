@@ -15,7 +15,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| **monitoring\_project\_id** | Project ID to create monitoring resources in | `string` | n/a | **yes** |
+| monitoring\_project\_id | Project ID to create monitoring resources in | `string` | `hiiretail-monitoring-prod-6500` | no |
 | **display\_name** | Name of the service | `string` | n/a | **yes** |
 
 ## Outputs
