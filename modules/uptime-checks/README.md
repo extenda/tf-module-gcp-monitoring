@@ -16,7 +16,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | clan\_name | The name of the clan | `string` | `""` | no |
-| **monitoring\_project\_id** | Project ID to create monitoring resources in | `string` | n/a | **yes** |
+| monitoring\_project\_id** | Project ID to create monitoring resources in | `string` | "hiiretail-monitoring-prod-6500" | no |
 | notification\_channels | List of notificaton channel IDs | `list` | `[]` | no |
 | project\_env | Project environment associated with uptime check | `string` | "" | no |
 | **project\_id** | Project ID to associate with uptime check | `string` | n/a | **yes** |
