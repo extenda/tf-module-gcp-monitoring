@@ -6,7 +6,7 @@ locals {
 resource "google_monitoring_uptime_check_config" "uptime_check_config" {
   for_each = { for i in var.uptime_checks : i.service_name => i }
 
-  display_name = "[${var.clan_name}] ${each.value.service_name} API Uptimecheck"
+  display_name = each.value.service_name
   timeout      = lookup(each.value, "timeout", local.default_timeout)
   period       = lookup(each.value, "period", local.default_period)
 
