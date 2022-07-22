@@ -31,9 +31,3 @@ variable clan_name {
   description = "The name of the clan"
   default     = ""
 }
-
-variable project_env {
-  type        = string
-  description = "Project environment associated with uptime check"
-  default     = ""
-}

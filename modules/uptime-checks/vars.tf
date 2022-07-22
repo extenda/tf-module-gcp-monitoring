@@ -42,12 +42,6 @@ variable uptime_checks {
 #   description = "The list of uptime checks configurations"
 # }
 
-variable project_env {
-  type        = string
-  description = "Project environment associated with uptime check"
-  default     = ""
-}
-
 variable uptime_check_alerts {
   type        = any
   description = "Configuration for uptime check alerts"
