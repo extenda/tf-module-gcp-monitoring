@@ -7,10 +7,10 @@ resource "google_monitoring_slo" "slo" {
   for_each = { for i in var.slo_config : i.slo_id => i }
 
   slo_id              = each.value.slo_id
-  project             = lookup(each.value, "project_id")
-  service             = lookup(each.value, "service")
-  display_name        = lookup(each.value, "display_name")
-  goal                = lookup(each.value, "goal")
+  project             = each.value.project_id
+  service             = each.value.service
+  display_name        = each.value.display_name
+  goal                = each.value.goal
   calendar_period     = lookup(each.value, "calendar_period", null)
   rolling_period_days = lookup(each.value, "rolling_period_days", null)
 

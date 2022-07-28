@@ -1,5 +1,3 @@
-# NOTE! to run the example move config folder to modules/slos/ folder!
-
 module slos {
   source = "../../modules/slos"
 
@@ -9,7 +7,7 @@ module slos {
   slo_config = [
     {
       slo_id = "month-latency"
-      project_id = "hiiretail-monitoring-prod-6500"
+      project_id = "monitoring-project-id"
       service = "sre.exdash-test"
       display_name = "Month | Latency"
       goal = "0.95"
@@ -26,7 +24,7 @@ EOF
     },
     {
       slo_id = "month-error-rate"
-      project_id = "hiiretail-monitoring-prod-6500"
+      project_id = "monitoring-project-id"
       service = "sre.exdash-test"
       display_name = "Month | Error rate"
       goal = "0.999"
