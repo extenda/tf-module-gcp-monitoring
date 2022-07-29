@@ -2,29 +2,6 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.18 |
-| google | >= 4.0 |
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| google | >= 4.0 |
-
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-
-## Requirements
-
-| Name | Version |
-|------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.18 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.0 |
 
