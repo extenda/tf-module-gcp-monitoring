@@ -115,4 +115,6 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| alert_ids | The id of the alerts |
