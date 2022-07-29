@@ -22,7 +22,7 @@ variable uptime_check_alerts {
 
 variable notification_channels {
   type        = list
-  description = "List of notificaton channel IDs"
+  description = "List of notification channel IDs"
   default     = []
 }
 
