@@ -49,6 +49,11 @@ resource "google_monitoring_alert_policy" "alert_policy" {
         duration                = lookup(conditions.value, "condition_monitoring_query_language.duration", "")
         evaluation_missing_data = lookup(conditions.value, "condition_monitoring_query_language.evaluation_missing_data", null)
       }
+
+      condition_matched_log {
+        filter    = lookup(conditions.value, "condition_matched_log.filter", "")
+        label_extractors = lookup(conditions.value, "condition_matched_log.label_extractors", null)
+      }
     }
   }
 
