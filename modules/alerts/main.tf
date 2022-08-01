@@ -12,11 +12,11 @@ resource "google_monitoring_alert_policy" "alert_policy" {
     content {
       display_name = conditions.value["display_name"]
       condition_threshold {
-        comparison         = conditions.value.condition_threshold["comparison"]
-        filter             = conditions.value.condition_threshold["filter"]
-        threshold_value    = conditions.value.condition_threshold["threshold_value"]
-        duration           = lookup(conditions.value.condition_threshold, "duration", "0s")
-        denominator_filter = lookup(conditions.value, "denominator_filter", "")
+        comparison         = lookup(conditions.value, "condition_threshold.comparison", "COMPARISON_GT")
+        filter             = lookup(conditions.value, "condition_threshold.filter", null)
+        threshold_value    = lookup(conditions.value, "condition_threshold.threshold_value", null)
+        duration           = lookup(conditions.value, "condition_threshold.duration", "0s")
+        denominator_filter = lookup(conditions.value, "condition_threshold.denominator_filter", "")
 
         dynamic "aggregations" {
           for_each = lookup(conditions.value, "condition_threshold.aggregations", [])
@@ -39,13 +39,18 @@ resource "google_monitoring_alert_policy" "alert_policy" {
         }
 
         trigger {
-          count   = lookup(conditions.value.condition_threshold, "trigger.count", null)
-          percent = lookup(conditions.value.condition_threshold, "trigger.percent", null)
+          count   = lookup(conditions.value, "condition_threshold.trigger.count", null)
+          percent = lookup(conditions.value, "condition_threshold.trigger.percent", null)
         }
+      }
+
+      condition_monitoring_query_language {
+        query                   = lookup(conditions.value, "condition_monitoring_query_language.query", "")
+        duration                = lookup(conditions.value, "condition_monitoring_query_language.duration", "")
+        evaluation_missing_data = lookup(conditions.value, "condition_monitoring_query_language.evaluation_missing_data", null)
       }
     }
   }
-
 
   alert_strategy {
     auto_close = lookup(each.value, "alert_strategy.auto_close", null)
