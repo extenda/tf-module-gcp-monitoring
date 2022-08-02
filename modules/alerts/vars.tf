@@ -5,7 +5,7 @@ variable "monitoring_project_id" {
 }
 variable "policies" {
   type        = any
-  description = "The list of alert policies configurations"
+  description = "List of configs for alert policies"
 }
 
 variable "user_labels" {
