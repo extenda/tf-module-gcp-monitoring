@@ -1,17 +1,24 @@
-variable project_id {
-  type        = string
-  description = "Project ID to associate with uptime check"
-}
-
-variable monitoring_project_id {
+variable "monitoring_project_id" {
   type        = string
   description = "Project ID to create monitoring resources in"
   default     = "hiiretail-monitoring-prod-6500"
 }
 
-variable uptime_checks {
+variable "uptime_checks" {
   type        = any
   description = "The list of uptime checks configurations"
+}
+
+variable "notification_channels" {
+  type        = list(any)
+  description = "List of notificaton channel IDs"
+  default     = []
+}
+
+variable labels {
+  type        = map
+  description = "Labels for the alert/s"
+  default     = {}
 }
 
 # After we update to terraform v1.3.0 we'll be able to use the structure below 
@@ -38,35 +45,10 @@ variable uptime_checks {
 #     matcher = optional(string) // CONTAINS_STRING, NOT_CONTAINS_STRING, MATCHES_REGEX, NOT_MATCHES_REGEX, MATCHES_JSON_PATH, and NOT_MATCHES_JSON_PATH
 #     json_path = optional(string)
 #     json_matcher = optional(string) // EXACT_MATCH and REGEX_MATCH
+#     alert = optional({
+#       uptime_duration = optional(string)
+#       threshold = optional(number))
+#      }
 #   }))
 #   description = "The list of uptime checks configurations"
 # }
-
-variable uptime_check_alerts {
-  type        = any
-  description = "Configuration for uptime check alerts"
-  default     = []
-}
-
-# After we update to terraform v1.3.0 we'll be able to use the structure below 
-# variable uptime_check_alerts {
-#   type = list(object({
-#     service_name = string
-#     uptime_duration = string
-#     threshold = optional(number)
-#     labels = map(strings)
-#   }))
-#   description = "Configuration for uptime check alerts"
-# }
-
-variable notification_channels {
-  type        = list
-  description = "List of notificaton channel IDs"
-  default     = []
-}
-
-variable clan_name {
-  type        = string
-  description = "The name of the clan"
-  default     = ""
-}

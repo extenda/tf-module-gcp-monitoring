@@ -4,7 +4,7 @@ variable monitoring_project_id {
   default     = "hiiretail-monitoring-prod-6500"
 }
 
-variable display_name {
+variable service_name {
   type        = string
   description = "Display name of the custom service"
 }
@@ -15,7 +15,7 @@ variable project_id {
   default     = "hiiretail-monitoring-prod-6500"
 }
 
-variable slo_config {
+variable slos {
   description = "Configuration for SLO"
   type        = any
 }
