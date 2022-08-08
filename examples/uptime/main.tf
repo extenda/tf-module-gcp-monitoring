@@ -1,5 +1,5 @@
 module "uptime-check" {
-  source                = "/Users/user/Desktop/gcp-monitoring/tf-module-gcp-monitoring/modules/uptime-check"
+  source                = "../../modules/uptime-check"
   monitoring_project_id = "monitoring-project-id"
 
   uptime_checks = [
