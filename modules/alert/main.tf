@@ -14,8 +14,8 @@ resource "google_monitoring_alert_policy" "alert_policy" {
       display_name = conditions.value["display_name"]
       condition_threshold {
         comparison         = lookup(conditions.value.condition_threshold, "comparison", "COMPARISON_GT")
-        filter             = lookup(conditions.value.condition_threshold, "filter")
-        threshold_value    = lookup(conditions.value.condition_threshold, "threshold_value")
+        filter             = lookup(conditions.value.condition_threshold, "filter", null)
+        threshold_value    = lookup(conditions.value.condition_threshold, "threshold_value", null)
         duration           = lookup(conditions.value.condition_threshold, "duration", "0s")
         denominator_filter = lookup(conditions.value.condition_threshold, "denominator_filter", "")
 
