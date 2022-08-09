@@ -1,0 +1,17 @@
+- display_name: "[P2] Pub/Sub | Push subscription latency"
+  enabled: true
+  conditions:
+  - condition_threshold:
+      filter: >
+        metric.type="pubsub.googleapis.com/subscription/push_request_latencies"
+        resource.type="pubsub_subscription"
+        resource.label."project_id"="<MY-PROJECT-ID>"
+      threshold_value: 3000000.0
+      duration: 120s
+      aggregations:
+      - alignment_period: 60s
+        per_series_aligner: ALIGN_DELTA
+        cross_series_reducer: REDUCE_PERCENTILE_95
+        group_by_fields:
+        - resource.label.subscription_id
+    display_name: Push subscription latency

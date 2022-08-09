@@ -4,7 +4,7 @@ locals {
 }
 
 resource "google_monitoring_uptime_check_config" "uptime_check_config" {
-  for_each = { for i in var.uptime_checks : i.service_name => i }
+  for_each     = { for i in var.uptime_checks : i.service_name => i }
   display_name = each.value.service_name
   project      = var.monitoring_project_id
   timeout      = lookup(each.value, "timeout", local.default_timeout)
@@ -33,7 +33,7 @@ resource "google_monitoring_uptime_check_config" "uptime_check_config" {
   monitored_resource {
     type = lookup(each.value, "type", "uptime_url")
     labels = {
-      host       = lookup(each.value, "hostname", null)
+      host = lookup(each.value, "hostname", null)
     }
   }
 
@@ -60,12 +60,11 @@ resource "google_monitoring_alert_policy" "uptime_check_alert_policy" {
   conditions {
     display_name = "Failure of uptimecheck for ${each.value.service_name}"
     condition_threshold {
-      filter = <<EOT
+      filter          = <<EOT
 metric.type="monitoring.googleapis.com/uptime_check/check_passed" AND metric.label.check_id="${google_monitoring_uptime_check_config.uptime_check_config[each.value.service_name].uptime_check_id}" AND resource.type="uptime_url"
       EOT
-
-      duration        = lookup(each.value, "alerts.uptime_duration", "300s")
-      threshold_value = lookup(each.value, "alerts.threshold", 1)
+      duration        = lookup(lookup(each.value, "alert", {}), "uptime_duration", "300s")
+      threshold_value = lookup(lookup(each.value, "alert", {}), "threshold", 1)
       comparison      = "COMPARISON_GT"
       aggregations {
         alignment_period     = "1200s"
@@ -80,6 +79,5 @@ metric.type="monitoring.googleapis.com/uptime_check/check_passed" AND metric.lab
     }
   }
   user_labels = var.labels
-
-  depends_on = [google_monitoring_uptime_check_config.uptime_check_config]
+  depends_on  = [google_monitoring_uptime_check_config.uptime_check_config]
 }

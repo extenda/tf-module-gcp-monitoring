@@ -1,22 +1,22 @@
-variable "monitoring_project_id" {
+variable monitoring_project_id {
   type        = string
   description = "Project ID to create monitoring resources in"
   default     = "hiiretail-monitoring-prod-6500"
 }
 
-variable "uptime_checks" {
+variable uptime_checks {
   type        = any
   description = "The list of uptime checks configurations"
 }
 
-variable "notification_channels" {
+variable notification_channels {
   type        = list(any)
   description = "List of notificaton channel IDs"
   default     = []
 }
 
 variable labels {
-  type        = map
+  type        = map(any)
   description = "Labels for the alert/s"
   default     = {}
 }
