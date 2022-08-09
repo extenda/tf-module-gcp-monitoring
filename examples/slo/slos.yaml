@@ -1,0 +1,15 @@
+- display_name: Month | Error rate
+  goal: 0.99
+  slo_id: month-error-rate
+  calendar_period: MONTH
+  type: request_based_sli
+  method: good_total_ratio
+  bad_service_filter: >
+    metric.type="knative.dev/serving/revision/request_count"
+    resource.type="knative_revision"
+    metric.labels.response_code_class="5xx"
+    resource.labels.service_name="<my-service>"
+  total_service_filter: >
+    metric.type="knative.dev/serving/revision/request_count"
+    resource.type="knative_revision"
+    resource.labels.service_name=<my-service>"

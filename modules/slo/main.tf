@@ -1,14 +1,14 @@
 resource "google_monitoring_custom_service" "custom_service" {
   project      = var.monitoring_project_id
-  display_name = var.display_name
+  display_name = var.service_name
 }
 
 resource "google_monitoring_slo" "slo" {
-  for_each = { for i in var.slo_config : i.slo_id => i }
+  for_each = { for i in var.slos : i.slo_id => i }
 
+  service             = google_monitoring_custom_service.custom_service.service_id
+  project             = var.project_id
   slo_id              = each.value.slo_id
-  project             = each.value.project_id
-  service             = each.value.service
   display_name        = each.value.display_name
   goal                = each.value.goal
   calendar_period     = lookup(each.value, "calendar_period", null)
