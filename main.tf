@@ -1,4 +1,4 @@
-module uptimechecks {
+module "uptimechecks" {
   source = "./modules/uptime-checks"
 
   project_id            = var.project_id
