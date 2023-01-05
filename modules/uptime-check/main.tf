@@ -1,6 +1,6 @@
 locals {
   default_timeout = "10s"
-  default_period  = "60s"
+  default_period  = "300s"
 }
 
 resource "google_monitoring_uptime_check_config" "uptime_check_config" {
