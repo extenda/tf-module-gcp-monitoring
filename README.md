@@ -1,5 +1,7 @@
 # tf-module-gcp-monitoring
 
+> :warning: **DEPRECATED**
+
 ## Requirements
 
 | Name | Version |
